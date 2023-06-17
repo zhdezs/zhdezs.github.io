@@ -1,0 +1,338 @@
+html {
+    font-family: HarmonyOS_Sans/* , "Microsoft YaHei", "微软雅黑", "Sans Serif" */;
+}
+body {
+    background: #202124;
+    display: inline-block;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    user-select: none;
+    -webkkit-user-select: none;
+    cursor: default;
+    margin: 0;
+    opacity: 1;
+    z-index: -5;
+}
+
+@keyframes header-fade-in {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+
+    to {
+        opacity: 0.6;
+        height: 35px;
+    }
+}
+
+@-webkit-keyframes header-fade-in {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+
+    to {
+        opacity: 0.6;
+        height: 35px;
+    }
+}
+
+.image-container {
+    display: inline-block;
+    position: absolute;
+    background: url('../img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    max-height: 1080px;
+    -webkit-animation: image-fade-in 2s;
+    animation: image-fade-in 2s;
+    z-index: -1;
+}
+
+@keyframes text-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes text-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.big-title-container {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 100%;
+    opacity: 1;
+}
+
+.big-title-container .title {
+    position: absolute;
+    color: #FFF;
+    top: 1vw;
+    text-align: center;
+    width: 100%;
+    font-family: Source Han Sans CN;
+    font-size: 5vw;
+    font-weight: normal;
+    letter-spacing: 0em;
+    line-height: 85%;
+    -webkit-animation: text-fade-in 1.5s;
+    animation: text-fade-in 1.5s;
+}
+
+.big-title-container .sub-title {
+    position: absolute;
+    ;
+    padding-top: 10px;
+    color: #3e9afc;
+    top: 10vw;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    font-weight: bolder;
+    font-size: 2vw;
+    font-family: Source Han Sans CN;
+    letter-spacing: 0em;
+    -webkit-animation: text-fade-in 1.5s;
+    animation: text-fade-in 1.5s;
+}
+
+@media screen and (max-width: 600px) {
+    .big-title-container .title {
+        font-size: 8vw;
+    }
+
+    .big-title-container .sub-title {
+        font-size: 5vw;
+        top: 13vw;
+    }
+}
+
+/* @media screen and (max-width: 840px) {
+    .big-title-container .title {
+        top: 40%;
+        font-size: 400%;
+    }
+    .big-title-container .sub-title {
+        top: 490%;
+        font-size: 140%;
+    }
+}
+
+@media screen and (max-width: 672px) {
+    .big-title-container .title {
+        top: 70%;
+        font-size: 300%;
+    }
+    .big-title-container .sub-title {
+        top: 440%;
+        font-size: 130%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .big-title-container .title {
+        top: 120%;
+        font-size: 250%;
+    }
+    .big-title-container .sub-title {
+        top: 450%;
+        font-size: 120%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .big-title-container .title {
+        top: 170%;
+        font-size: 200%;
+    }
+    .big-title-container .sub-title {
+        top: 440%;
+        font-size: 110%;
+    }
+}
+
+@media screen and (max-width: 338px) {
+    .big-title-container .title {
+        top: 185%;
+        font-size: 180%;
+    }
+    .big-title-container .sub-title {
+        top: 435%;
+        font-size: 100%;
+    }
+}
+
+This shit
+*/
+@keyframes image-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes image-fade-in {
+
+    /* Safari and Chrome(FUCK YOU SAFARI)*/
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+header {
+    background-color: black !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    opacity: 0.6;
+    z-index: 5;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 150%;
+    -webkit-animation: header-fade-in 2s;
+    animation: header-fade-in 2s;
+}
+
+header:hover {
+    opacity: 0.7;
+}
+
+header .left {
+    color: #FFF;
+    -webkit-animation: text-fade-in 2s;
+    animation: text-fade-in 2s;
+}
+
+header a {
+    color: #FFF;
+}
+
+header #time {
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    color: #FFF;
+    text-align: center;
+    -webkit-animation: text-fade-in 2s;
+    animation: text-fade-in 2s;
+}
+
+.arrow {
+    position: absolute;
+    border-radius: 15px;
+    width: 100%;
+    bottom: 10%;
+    left: 0;
+    height: 10px;
+    -webkit-animation: text-fade-in 3s;
+    animation: text-fade-in 3s;
+}
+
+main {
+    display: inline-block;
+    z-index: 5;
+}
+
+main .blank {
+    position: absolute;
+    text-align: center;
+    border-radius: 43px;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    background-color: #00000000/* #2B2C2F */;
+    color: white !important;
+}
+
+main .blank .regular_color {
+    background-color: #00000000;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+main .blank .alternate_color {
+    background-color: #2B2C2F;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.hitokoto {
+    position: absolute !important;
+    bottom: 45px;
+    width: auto;
+    max-width: 500px;
+    text-align: center;
+    border-radius: 15px;
+    background-size: contain;
+    background-color: rgba(0, 0, 0, 0.56);
+    font-size: 20px;
+    padding: 2px 5px 2px 5px;
+    margin: 10px;
+    -webkit-animation: text-fade-in 1s;
+    animation: text-fade-in 1s;
+
+}
+
+.hitokoto #hitokoto_text {
+    color: #ffffffdd;
+    text-decoration: none;
+    -webkit-animation: text-fade-in 1.5s;
+    animation: text-fade-in 1.5s;
+}
+
+footer {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    right: 10px;
+    width: 100%;
+    color: #fff;
+    text-align: right;
+    opacity: 0.8;
+    line-height: 15px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight: bold;
+}
+
+p {
+    font-size: 17px;
+    line-height: 25px;
+}
+
+.blank a {
+    color: #3e9afc;
+}
