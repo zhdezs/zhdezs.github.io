@@ -1,8 +1,10 @@
 html {
-    font-family: HarmonyOS_Sans/* , "Microsoft YaHei", "微软雅黑", "Sans Serif" */;
+    font-family: "HarmonyOS_Sans", "Microsoft YaHei", "微软雅黑", "Sans Serif";
 }
+
 body {
-    background: #202124;
+    background-color: #202124;
+    background: url('../img/background.jpg') no-repeat center center fixed;
     display: inline-block;
     -webkit-background-size: cover;
     -o-background-size: cover;
@@ -11,34 +13,20 @@ body {
     max-width: 100%;
     overflow-x: hidden;
     user-select: none;
-    -webkkit-user-select: none;
     cursor: default;
     margin: 0;
     opacity: 1;
     z-index: -5;
+    animation: image-fade-in 1s ease;
 }
 
 @keyframes header-fade-in {
     from {
         opacity: 0;
-        height: 0;
     }
 
     to {
         opacity: 0.6;
-        height: 35px;
-    }
-}
-
-@-webkit-keyframes header-fade-in {
-    from {
-        opacity: 0;
-        height: 0;
-    }
-
-    to {
-        opacity: 0.6;
-        height: 35px;
     }
 }
 
@@ -58,16 +46,6 @@ body {
 }
 
 @keyframes text-fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes text-fade-in {
     from {
         opacity: 0;
     }
@@ -124,7 +102,7 @@ body {
     }
 
     .big-title-container .sub-title {
-        font-size: 5vw;
+        font-size: 6vw;
         top: 13vw;
     }
 }
@@ -196,20 +174,9 @@ This shit
     }
 }
 
-@-webkit-keyframes image-fade-in {
-
-    /* Safari and Chrome(FUCK YOU SAFARI)*/
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 header {
     background-color: black !important;
+    overflow: hidden;
     position: fixed;
     top: 0;
     left: 0;
@@ -222,10 +189,12 @@ header {
     font-size: 150%;
     -webkit-animation: header-fade-in 2s;
     animation: header-fade-in 2s;
+    transition: all 1s ease;
 }
 
 header:hover {
     opacity: 0.7;
+    transition: all 1s ease;
 }
 
 header .left {
@@ -275,19 +244,37 @@ main .blank {
     color: white !important;
 }
 
-main .blank .regular_color {
-    background-color: #00000000;
+main .blank .regular_color, main .blank .alternate_color, main .blank .transparent{
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
+}
+
+main .blank .regular_color {
+    background-color: #202124;
 }
 
 main .blank .alternate_color {
     background-color: #2B2C2F;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
+
+main .blank .transparent {
+    background-color: #00000000;
+}
+
+main .blank h1 {
+    margin-bottom: 0px;
+}
+
+.label {
+    display: inline-block;
+    background-color: #37393e;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px 4px 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .hitokoto {
     position: absolute !important;
     bottom: 45px;
@@ -313,13 +300,10 @@ main .blank .alternate_color {
 }
 
 footer {
-    position: absolute;
     display: inline-block;
-    bottom: 0;
-    right: 10px;
+    padding: 10px;
     width: 100%;
     color: #fff;
-    text-align: right;
     opacity: 0.8;
     line-height: 15px;
 }
