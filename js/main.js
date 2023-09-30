@@ -1,12 +1,3 @@
-$.backstretch([
-    'https://s3.bmp.ovh/imgs/2022/07/17/380a2adb51d67de1.jpg',
-    'https://img1.imgtp.com/2022/07/18/tdM4vLqs.jpg',
-    'https://s3.bmp.ovh/imgs/2022/07/11/07761d8934946c28.jpg',
-    'https://s3.bmp.ovh/imgs/2022/07/18/35dee00083c7e0e1.jpg',
-], {
-    fade: 1200, // 动画时长
-    duration: 2500 // 切换延时
-});
 document.addEventListener('visibilitychange', function () {
     var isHidden = document.hidden;
     if (isHidden) {
@@ -49,13 +40,13 @@ function time() {
         case 0:
             str += "星期天，明天又是周一啦TAT";break;
         case 1:
-            str += "星期一";break;
+            str += "星期一，怨气冲天！";break;
         case 2:
             str += "星期二";break;
         case 3:
-            str += "星期三";break;
+            str += "星期三，加油，再撑两天就周末了！";break;
         case 4:
-            str += "星期四";break;
+            str += "星期四，加油，再撑一天就周末了！";break;
         case 5:
             str += "星期五，明天是周末! qwq";break;
         case 6:
@@ -63,9 +54,22 @@ function time() {
     }
     var time = document.getElementById("time");
     time.innerHTML = str;//put the text in the element
+    // 初始时间，日/月/年 时:分:秒
+    X = new Date("6/5/2023 00:00:00");
+    Y = new Date();
+    T = (Y.getTime() - X.getTime());
+    M = 24 * 60 * 60 * 1000;
+    a = T / M;
+    A = Math.floor(a);
+    b = (a - A) * 24;
+    B = Math.floor(b);
+    c = (b - B) * 60;
+    C = Math.floor((b - B) * 60);
+    D = Math.floor((c - C) * 60);//信息写入到div中
+    document.getElementById('runtime').innerHTML = "本站已运行: " + A + "天" + B + "小时" + C + "分" + D + "秒";
 }
-setInterval(time, 500);//refresh(maybe too fast)
+setInterval(time, 1000);//refresh(maybe too fast)
 function console_welcome() {
-    console.log("__  _________     ___  __________\n/  |/  / ____/___ |__ \\|__  /__  /\n/ /|_/ / /_  / __ \\__/ / /_ < /_ < \n/ /  / / __/ / / / / __/___/ /__/ / \n/_/  /_/_/   /_/ /_/____/____/____/  \n                                  ");
+    console.log("    __  _________     ___  __________\n   /  |/  / ____/___ |__ \\|__  /__  /\n  / /|_/ / /_  / __ \\__/ / /_ < /_ < \n / /  / / __/ / / / / __/___/ /__/ / \n/_/  /_/_/   /_/ /_/____/____/____/  \n                                  ");
     console.log("💡Hello!\n✅Here is the Website of MFn!\n🌏Welcome to ask me to add your own website in 'Friendly Links'!\n🔵Use the latest Chromium kernel browser for the best experience!");
 }

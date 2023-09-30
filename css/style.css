@@ -1,5 +1,5 @@
 html {
-    font-family: "HarmonyOS_Sans", "Microsoft YaHei", "微软雅黑", "Sans Serif";
+    font-family: HarmonyOS_Sans;
 }
 
 body {
@@ -51,7 +51,6 @@ body {
     top: 1vw;
     text-align: center;
     width: 100%;
-    font-family: Source Han Sans CN;
     font-size: 5vw;
     font-weight: normal;
     letter-spacing: 0em;
@@ -62,16 +61,14 @@ body {
 
 .big-title-container .sub-title {
     position: absolute;
-    ;
     padding-top: 10px;
     color: #3e9afc;
-    top: 10vw;
+    top: 9vw;
     left: 0;
     text-align: center;
     width: 100%;
-    font-weight: bolder;
+    font-weight: normal;
     font-size: 2vw;
-    font-family: Source Han Sans CN;
     letter-spacing: 0em;
     -webkit-animation: text-fade-in 1.5s;
     animation: text-fade-in 1.5s;
@@ -168,6 +165,7 @@ header {
     padding-left: 10px;
     padding-top: 10px;
     font-size: 20px;
+    line-height: 25px;
     -webkit-animation: header-fade-in 2s;
     animation: header-fade-in 2s;
     transition: all 1s ease;
@@ -179,6 +177,9 @@ header:hover {
 }
 
 header .left {
+    position: absolute;
+    top: 12px;
+    padding-left: 8px;
     color: #FFF;
     -webkit-animation: text-fade-in 2s;
     animation: text-fade-in 2s;
@@ -254,25 +255,29 @@ main .blank h1 {
     padding: 5px 15px 4px 15px;
     margin-left: 5px;
     margin-right: 5px;
-    font-weight: 500;
+    color:hsl(0, 0%, 80%);
+    transition: all 0.5s ease;
 }
 
 .label:hover {
-    font-weight: 900;
+    color:hsl(0, 0%, 100%);
+    font-size: 18px;
+    transition: all 0.5s ease;
 }
 
 .hitokoto {
-    position: absolute !important;
-    bottom: 45px;
+    position: absolute;
+    bottom: 90px;
     width: auto;
+    left: 50%;
+    transform: translateX(-50%);
     max-width: 500px;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 5px;
     background-size: contain;
-    background-color: rgba(0, 0, 0, 0.56);
+    background-color: rgba(0, 0, 0, 0.20);
     font-size: 20px;
     padding: 2px 5px 2px 5px;
-    margin: 10px;
     -webkit-animation: text-fade-in 1s;
     animation: text-fade-in 1s;
 
