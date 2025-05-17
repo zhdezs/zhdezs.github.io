@@ -22,6 +22,21 @@
                     fontFamily: {
                         inter: ['Inter', 'sans-serif'],
                     },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease forwards',
+                        'fade-in-right': 'fadeInRight 0.8s ease forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        }
+                    }
                 }
             }
         }
@@ -43,49 +58,51 @@
             .hover-scale:hover {
                 transform: scale(1.03);
             }
-            .animate-fade-in {
-                animation: fadeIn 0.8s ease forwards;
+            .card-hover-3d {
+                transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
             }
-            .animate-slide-up {
-                animation: slideUp 0.8s ease forwards;
+            .card-hover-3d:hover {
+                transform: translateY(-5px) rotateX(5deg);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             }
-            .animate-slide-right {
-                animation: slideRight 0.8s ease forwards;
-            }
-            .delay-100 {
-                animation-delay: 0.1s;
-            }
-            .delay-200 {
-                animation-delay: 0.2s;
-            }
-            .delay-300 {
-                animation-delay: 0.3s;
-            }
-            .delay-400 {
-                animation-delay: 0.4s;
-            }
-            .delay-500 {
-                animation-delay: 0.5s;
+            .fast-animation {
+                transform: translateZ(0);
+                backface-visibility: hidden;
             }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* 自定义缓动函数 */
+        :root {
+            --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        /* 滚动进度条 */
+        #scroll-progress {
+            transition: width 0.1s ease;
         }
         
-        @keyframes slideRight {
-            from { transform: translateX(-30px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        /* 模态框内容 */
+        .modal-content {
+            transition: transform 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+        }
+        
+        /* 导航栏滚动效果 */
+        header {
+            transition: all 0.3s var(--ease-out-expo);
+        }
+        
+        /* 数字动画容器 */
+        .number-animation {
+            overflow: hidden;
+            display: inline-block;
         }
     </style>
 </head>
 <body class="font-inter bg-slate-50 text-dark min-h-screen">
+    <!-- 滚动进度指示器 -->
+    <div class="fixed top-0 left-0 right-0 h-1 bg-primary z-50" id="scroll-progress"></div>
+
     <!-- 页面加载指示器 -->
     <div id="page-loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
         <div class="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
@@ -103,17 +120,17 @@
             
             <!-- 桌面导航 -->
             <nav class="hidden md:flex space-x-8">
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium">首页</a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium">功能</a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium">关于</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium hover:underline hover:text-underline-offset-4">首页</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium hover:underline hover:text-underline-offset-4">功能</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium hover:underline hover:text-underline-offset-4">关于</a>
                 <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium flex items-center" id="desktop-download-btn">
                     <i class="fa-brands fa-github mr-2"></i>下载
                 </a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium">联系我们</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium hover:underline hover:text-underline-offset-4">联系我们</a>
             </nav>
             
             <!-- 移动端菜单按钮 -->
-            <button class="md:hidden text-slate-700 focus:outline-none" id="menu-toggle">
+            <button class="md:hidden text-slate-700 focus:outline-none hover-scale" id="menu-toggle">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
         </div>
@@ -121,20 +138,21 @@
         <!-- 移动端导航菜单 -->
         <div class="md:hidden bg-white shadow-lg absolute top-full left-0 right-0 transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none" id="mobile-menu">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2">首页</a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2">功能</a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2">关于</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2 hover:underline hover:text-underline-offset-4">首页</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2 hover:underline hover:text-underline-offset-4">功能</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2 hover:underline hover:text-underline-offset-4">关于</a>
                 <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2 flex items-center" id="mobile-download-btn">
                     <i class="fa-brands fa-github mr-2"></i>下载
                 </a>
-                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2">联系我们</a>
+                <a href="#" class="text-slate-700 hover:text-primary transition-colors font-medium py-2 hover:underline hover:text-underline-offset-4">联系我们</a>
             </div>
         </div>
     </header>
 
     <!-- 英雄区域 -->
-    <section class="pt-32 pb-20 px-4 bg-gradient-to-br from-slate-50 to-slate-100">
-        <div class="container mx-auto max-w-6xl">
+    <section class="pt-32 pb-20 px-4 bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-full h-full bg-[url('https://picsum.photos/1920/1080')] bg-cover bg-center opacity-5"></div>
+        <div class="container mx-auto max-w-6xl relative z-10">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 opacity-0 transform translate-y-10" id="hero-text">
                     <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow mb-6">
@@ -144,16 +162,16 @@
                         提供高质量的工具和资源，满足您的各种需求
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all hover-scale flex items-center justify-center" id="hero-download-btn">
+                        <a href="#" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all hover-scale flex items-center justify-center fast-animation" id="hero-download-btn">
                             <i class="fa-brands fa-github mr-2"></i>下载软件
                         </a>
-                        <a href="#" class="px-8 py-3 bg-white text-primary border border-primary/20 rounded-xl font-medium hover:bg-slate-50 transition-all hover-scale flex items-center justify-center" id="learn-more-btn">
+                        <a href="#" class="px-8 py-3 bg-white text-primary border border-primary/20 rounded-xl font-medium hover:bg-slate-50 transition-all hover-scale flex items-center justify-center fast-animation" id="learn-more-btn">
                             <i class="fa-solid fa-info-circle mr-2"></i>了解更多
                         </a>
                     </div>
                 </div>
                 <div class="md:w-1/2 relative opacity-0 transform translate-y-10" id="hero-image">
-                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl hover-scale">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl hover-scale card-hover-3d">
                         <!-- 图片加载优化 -->
                         <div class="aspect-video bg-slate-200 animate-pulse">
                             <img 
@@ -177,6 +195,30 @@
         </div>
     </section>
 
+    <!-- 统计数据区域 -->
+    <section class="py-16 px-4 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="opacity-0 transform translate-y-10" id="stat-1">
+                    <div class="text-4xl font-bold text-primary mb-2 number-animation" data-target="10000">0</div>
+                    <p class="text-slate-600">用户下载</p>
+                </div>
+                <div class="opacity-0 transform translate-y-10" id="stat-2">
+                    <div class="text-4xl font-bold text-primary mb-2 number-animation" data-target="50">0</div>
+                    <p class="text-slate-600">功能模块</p>
+                </div>
+                <div class="opacity-0 transform translate-y-10" id="stat-3">
+                    <div class="text-4xl font-bold text-primary mb-2 number-animation" data-target="99">0</div>
+                    <p class="text-slate-600">满意度%</p>
+                </div>
+                <div class="opacity-0 transform translate-y-10" id="stat-4">
+                    <div class="text-4xl font-bold text-primary mb-2 number-animation" data-target="24">0</div>
+                    <p class="text-slate-600">小时支持</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 功能区域 -->
     <section class="py-20 px-4">
         <div class="container mx-auto max-w-6xl">
@@ -187,7 +229,7 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- 功能卡片 1 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-1">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10 card-hover-3d" id="feature-card-1">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-bolt text-primary text-2xl"></i>
                     </div>
@@ -196,7 +238,7 @@
                 </div>
                 
                 <!-- 功能卡片 2 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-2">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10 card-hover-3d" id="feature-card-2">
                     <div class="w-14 h-14 rounded-xl bg-secondary/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-mobile-screen text-secondary text-2xl"></i>
                     </div>
@@ -205,7 +247,7 @@
                 </div>
                 
                 <!-- 功能卡片 3 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-3">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10 card-hover-3d" id="feature-card-3">
                     <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-shield text-accent text-2xl"></i>
                     </div>
@@ -229,16 +271,16 @@
                     </div>
                     <p class="text-slate-400 mb-6">提供高品质的网站体验，满足您的各种需求。</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors hover-scale">
                             <i class="fa-brands fa-facebook"></i>
                         </a>
-                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors hover-scale">
                             <i class="fa-brands fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors hover-scale">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="https://github.com/zhdezs" target="_blank" class="text-slate-400 hover:text-white transition-colors">
+                        <a href="https://github.com/zhdezs" target="_blank" class="text-slate-400 hover:text-white transition-colors hover-scale">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
@@ -247,10 +289,10 @@
                 <div class="opacity-0 transform translate-y-10" id="footer-col-2">
                     <h4 class="text-lg font-semibold mb-6">快速链接</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">首页</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">功能</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">关于我们</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">联系我们</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors hover:underline hover:text-underline-offset-2">首页</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors hover:underline hover:text-underline-offset-2">功能</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors hover:underline hover:text-underline-offset-2">关于我们</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors hover:underline hover:text-underline-offset-2">联系我们</a></li>
                     </ul>
                 </div>
                 
@@ -276,8 +318,8 @@
                     <h4 class="text-lg font-semibold mb-6">订阅更新</h4>
                     <p class="text-slate-400 mb-4">订阅我们的通讯，获取最新的更新和优惠。</p>
                     <form class="flex">
-                        <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none bg-slate-800 text-white border-0">
-                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 rounded-r-lg transition-colors">
+                        <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none bg-slate-800 text-white border-0 focus:ring-2 focus:ring-primary/50 transition-all">
+                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 rounded-r-lg transition-colors hover-scale">
                             <i class="fa-solid fa-paper-plane"></i>
                         </button>
                     </form>
@@ -292,10 +334,10 @@
 
     <!-- 下载模态框 -->
     <div id="download-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300 modal-content">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-dark">下载软件</h3>
-                <button id="close-modal" class="text-slate-500 hover:text-slate-700">
+                <button id="close-modal" class="text-slate-500 hover:text-slate-700 hover-scale">
                     <i class="fa-solid fa-times text-xl"></i>
                 </button>
             </div>
@@ -313,10 +355,10 @@
 
     <!-- GitHub 仓库模态框 -->
     <div id="repos-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4 transform scale-95 transition-transform duration-300 max-h-[80vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl p-8 max-w-2xl w-full mx-4 transform scale-95 transition-transform duration-300 modal-content max-h-[80vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-dark">我的 GitHub 仓库</h3>
-                <button id="close-repos-modal" class="text-slate-500 hover:text-slate-700">
+                <button id="close-repos-modal" class="text-slate-500 hover:text-slate-700 hover-scale">
                     <i class="fa-solid fa-times text-xl"></i>
                 </button>
             </div>
@@ -333,7 +375,7 @@
             </div>
             
             <div class="mt-8 text-center">
-                <a href="https://github.com/zhdezs" target="_blank" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                <a href="https://github.com/zhdezs" target="_blank" class="inline-flex items-center text-primary hover:text-primary/80 font-medium hover-scale">
                     <i class="fa-brands fa-github mr-2"></i>访问我的 GitHub 主页
                 </a>
             </div>
@@ -348,6 +390,9 @@
                 loader.classList.add('opacity-0', 'pointer-events-none');
                 loader.style.transition = 'opacity 0.5s ease';
             }, 300);
+            
+            // 初始化检查元素可见性
+            checkScroll();
         });
         
         // 移动端菜单切换
@@ -376,6 +421,15 @@
                 header.classList.add('py-3', 'bg-white/80');
                 header.classList.remove('py-2', 'shadow-md', 'bg-white/95');
             }
+            
+            // 更新滚动进度条
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+            
+            // 检查元素可见性
+            checkScroll();
         });
         
         // 下载模态框逻辑
@@ -392,9 +446,7 @@
             if (button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    downloadModal.classList.remove('opacity-0', 'pointer-events-none');
-                    downloadModal.querySelector('div').classList.remove('scale-95');
-                    downloadModal.querySelector('div').classList.add('scale-100');
+                    openModal(downloadModal);
                     
                     // 关闭移动端菜单
                     if (mobileMenu && !mobileMenu.classList.contains('opacity-0')) {
@@ -406,15 +458,13 @@
         
         // 关闭模态框
         closeModal.addEventListener('click', function() {
-            downloadModal.classList.add('opacity-0', 'pointer-events-none');
-            downloadModal.querySelector('div').classList.remove('scale-100');
-            downloadModal.querySelector('div').classList.add('scale-95');
+            closeModal(downloadModal);
         });
         
         // 点击模态框外部关闭
         downloadModal.addEventListener('click', function(e) {
             if (e.target === downloadModal) {
-                closeModal.click();
+                closeModal(downloadModal);
             }
         });
         
@@ -435,9 +485,7 @@
                 fetchGitHubRepos();
             }
             
-            reposModal.classList.remove('opacity-0', 'pointer-events-none');
-            reposModal.querySelector('div').classList.remove('scale-95');
-            reposModal.querySelector('div').classList.add('scale-100');
+            openModal(reposModal);
             
             // 关闭移动端菜单
             if (mobileMenu && !mobileMenu.classList.contains('opacity-0')) {
@@ -447,9 +495,7 @@
         
         // 关闭仓库模态框
         closeReposModal.addEventListener('click', function() {
-            reposModal.classList.add('opacity-0', 'pointer-events-none');
-            reposModal.querySelector('div').classList.remove('scale-100');
-            reposModal.querySelector('div').classList.add('scale-95');
+            closeModal(reposModal);
         });
         
         // 点击模态框外部关闭
@@ -458,6 +504,23 @@
                 closeReposModal.click();
             }
         });
+        
+        // 优化的模态框打开/关闭函数
+        function openModal(modal) {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+        
+        function closeModal(modal) {
+            modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
+            modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }, 300);
+        }
         
         // 获取GitHub仓库列表
         async function fetchGitHubRepos() {
@@ -491,12 +554,12 @@
                 // 渲染仓库列表
                 repos.forEach((repo, index) => {
                     const repoCard = document.createElement('div');
-                    repoCard.className = 'bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow opacity-0 transform translate-y-10';
-                    repoCard.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+                    repoCard.className = 'bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow opacity-0 transform translate-y-10 card-hover-3d';
+                    repoCard.style.transition = `opacity 0.5s var(--ease-out-expo) ${index * 0.1}s, transform 0.5s var(--ease-out-expo) ${index * 0.1}s`;
                     repoCard.innerHTML = `
                         <div class="flex justify-between items-start mb-4">
                             <h4 class="text-xl font-bold text-dark">
-                                <a href="${repo.html_url}" target="_blank" class="hover:text-primary transition-colors">
+                                <a href="${repo.html_url}" target="_blank" class="hover:text-primary transition-colors hover:underline hover:text-underline-offset-2">
                                     ${repo.name}
                                 </a>
                             </h4>
@@ -542,43 +605,4 @@
                 document.getElementById('footer-col-1'),
                 document.getElementById('footer-col-2'),
                 document.getElementById('footer-col-3'),
-                document.getElementById('footer-col-4')
-            ];
-            
-            elements.forEach(element => {
-                if (element) {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
-                    
-                    if (elementPosition < screenPosition) {
-                        element.classList.add('animate-fade-in', 'animate-slide-up');
-                        element.classList.remove('opacity-0', 'transform', 'translate-y-10');
-                    }
-                }
-            });
-        }
-        
-        // 初始检查
-        window.addEventListener('load', checkScroll);
-        
-        // 滚动时检查
-        window.addEventListener('scroll', checkScroll);
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                document.getElementById('footer-col-4'),
