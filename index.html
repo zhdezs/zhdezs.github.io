@@ -43,6 +43,45 @@
             .hover-scale:hover {
                 transform: scale(1.03);
             }
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease forwards;
+            }
+            .animate-slide-up {
+                animation: slideUp 0.8s ease forwards;
+            }
+            .animate-slide-right {
+                animation: slideRight 0.8s ease forwards;
+            }
+            .delay-100 {
+                animation-delay: 0.1s;
+            }
+            .delay-200 {
+                animation-delay: 0.2s;
+            }
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+            .delay-400 {
+                animation-delay: 0.4s;
+            }
+            .delay-500 {
+                animation-delay: 0.5s;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
     </style>
 </head>
@@ -97,7 +136,7 @@
     <section class="pt-32 pb-20 px-4 bg-gradient-to-br from-slate-50 to-slate-100">
         <div class="container mx-auto max-w-6xl">
             <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
+                <div class="md:w-1/2 mb-10 md:mb-0 opacity-0 transform translate-y-10" id="hero-text">
                     <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow mb-6">
                         欢迎来到<span class="gradient-text">zhdezs的网站</span>
                     </h1>
@@ -113,7 +152,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="md:w-1/2 relative">
+                <div class="md:w-1/2 relative opacity-0 transform translate-y-10" id="hero-image">
                     <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl hover-scale">
                         <!-- 图片加载优化 -->
                         <div class="aspect-video bg-slate-200 animate-pulse">
@@ -141,14 +180,14 @@
     <!-- 功能区域 -->
     <section class="py-20 px-4">
         <div class="container mx-auto max-w-6xl">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 opacity-0 transform translate-y-10" id="features-heading">
                 <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">强大的功能</h2>
                 <p class="text-slate-600 max-w-2xl mx-auto">我们提供多种强大功能，满足您的各种需求，让您的体验更加便捷和高效。</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- 功能卡片 1 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-1">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-bolt text-primary text-2xl"></i>
                     </div>
@@ -157,7 +196,7 @@
                 </div>
                 
                 <!-- 功能卡片 2 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-2">
                     <div class="w-14 h-14 rounded-xl bg-secondary/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-mobile-screen text-secondary text-2xl"></i>
                     </div>
@@ -166,7 +205,7 @@
                 </div>
                 
                 <!-- 功能卡片 3 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all hover-scale opacity-0 transform translate-y-10" id="feature-card-3">
                     <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-shield text-accent text-2xl"></i>
                     </div>
@@ -181,7 +220,7 @@
     <footer class="bg-dark text-white py-12 px-4">
         <div class="container mx-auto max-w-6xl">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
+                <div class="opacity-0 transform translate-y-10" id="footer-col-1">
                     <div class="flex items-center space-x-2 mb-6">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                             <i class="fa-solid fa-rocket text-white"></i>
@@ -205,7 +244,7 @@
                     </div>
                 </div>
                 
-                <div>
+                <div class="opacity-0 transform translate-y-10" id="footer-col-2">
                     <h4 class="text-lg font-semibold mb-6">快速链接</h4>
                     <ul class="space-y-3">
                         <li><a href="#" class="text-slate-400 hover:text-white transition-colors">首页</a></li>
@@ -215,7 +254,7 @@
                     </ul>
                 </div>
                 
-                <div>
+                <div class="opacity-0 transform translate-y-10" id="footer-col-3">
                     <h4 class="text-lg font-semibold mb-6">联系我们</h4>
                     <ul class="space-y-3">
                         <li class="flex items-start space-x-3">
@@ -233,7 +272,7 @@
                     </ul>
                 </div>
                 
-                <div>
+                <div class="opacity-0 transform translate-y-10" id="footer-col-4">
                     <h4 class="text-lg font-semibold mb-6">订阅更新</h4>
                     <p class="text-slate-400 mb-4">订阅我们的通讯，获取最新的更新和优惠。</p>
                     <form class="flex">
@@ -331,11 +370,11 @@
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 10) {
-                header.classList.add('py-2', 'shadow');
-                header.classList.remove('py-3');
+                header.classList.add('py-2', 'shadow-md', 'bg-white/95');
+                header.classList.remove('py-3', 'bg-white/80');
             } else {
-                header.classList.add('py-3');
-                header.classList.remove('py-2', 'shadow');
+                header.classList.add('py-3', 'bg-white/80');
+                header.classList.remove('py-2', 'shadow-md', 'bg-white/95');
             }
         });
         
@@ -450,9 +489,10 @@
                 }
                 
                 // 渲染仓库列表
-                repos.forEach(repo => {
+                repos.forEach((repo, index) => {
                     const repoCard = document.createElement('div');
-                    repoCard.className = 'bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow';
+                    repoCard.className = 'bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow opacity-0 transform translate-y-10';
+                    repoCard.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
                     repoCard.innerHTML = `
                         <div class="flex justify-between items-start mb-4">
                             <h4 class="text-xl font-bold text-dark">
@@ -477,6 +517,11 @@
                         </div>
                     `;
                     reposContainer.appendChild(repoCard);
+                    
+                    // 触发动画
+                    setTimeout(() => {
+                        repoCard.classList.remove('opacity-0', 'translate-y-10');
+                    }, 100);
                 });
             } catch (error) {
                 console.error('获取GitHub仓库时出错:', error);
@@ -484,6 +529,40 @@
                 reposError.classList.remove('hidden');
             }
         }
+        
+        // 页面滚动动画
+        function checkScroll() {
+            const elements = [
+                document.getElementById('hero-text'),
+                document.getElementById('hero-image'),
+                document.getElementById('features-heading'),
+                document.getElementById('feature-card-1'),
+                document.getElementById('feature-card-2'),
+                document.getElementById('feature-card-3'),
+                document.getElementById('footer-col-1'),
+                document.getElementById('footer-col-2'),
+                document.getElementById('footer-col-3'),
+                document.getElementById('footer-col-4')
+            ];
+            
+            elements.forEach(element => {
+                if (element) {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate-fade-in', 'animate-slide-up');
+                        element.classList.remove('opacity-0', 'transform', 'translate-y-10');
+                    }
+                }
+            });
+        }
+        
+        // 初始检查
+        window.addEventListener('load', checkScroll);
+        
+        // 滚动时检查
+        window.addEventListener('scroll', checkScroll);
         
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
