@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载中</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <!-- 引入 Inter 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#6366F1',
+                        accent: '#EC4899',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .gradient-text {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+            }
+            .pulse-slow {
+                animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            .loader-dot {
+                animation: loader-dot 1.4s infinite ease-in-out both;
+            }
+            .loader-dot:nth-child(1) { animation-delay: -0.32s; }
+            .loader-dot:nth-child(2) { animation-delay: -0.16s; }
+        }
+
+        @keyframes loader-dot {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gradient-to-br from-dark to-slate-900 text-light min-h-screen flex flex-col items-center justify-center p-4 overflow-hidden">
+    <!-- 动画背景元素 -->
+    <div class="fixed inset-0 overflow-hidden -z-10">
+        <div class="absolute top-[10%] left-[15%] w-64 h-64 rounded-full bg-primary/20 blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[20%] right-[10%] w-80 h-80 rounded-full bg-secondary/20 blur-[120px] animate-pulse-slow" style="animation-delay: 1s;"></div>
+        <div class="absolute top-[40%] right-[25%] w-48 h-48 rounded-full bg-accent/20 blur-[80px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- 主要加载内容 -->
+    <div class="max-w-md w-full text-center z-10">
+        <!-- 标志/品牌 -->
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-secondary mb-4 shadow-lg shadow-primary/20">
+                <i class="fa-solid fa-spinner fa-spin text-4xl text-white"></i>
+            </div>
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold gradient-text mb-2">加载中</h1>
+            <p class="text-slate-300 text-lg">请稍候，我们正在准备一切</p>
+        </div>
+
+        <!-- 加载动画 -->
+        <div class="mb-8">
+            <div class="flex justify-center space-x-3">
+                <div class="loader-dot w-4 h-4 rounded-full bg-primary"></div>
+                <div class="loader-dot w-4 h-4 rounded-full bg-secondary"></div>
+                <div class="loader-dot w-4 h-4 rounded-full bg-accent"></div>
+            </div>
+        </div>
+
+        <!-- 进度条 -->
+        <div class="w-full bg-slate-800/50 rounded-full h-2.5 mb-12 overflow-hidden">
+            <div class="bg-gradient-to-r from-primary to-secondary h-2.5 rounded-full" id="progress-bar" style="width: 75%; animation: progress-animation 2s ease-in-out infinite;"></div>
+        </div>
+
+        <!-- 状态文本 -->
+        <p class="text-slate-400 text-sm animate-pulse" id="status-text">正在进行最后的润色...</p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="absolute bottom-6 left-0 right-0 text-center text-slate-500 text-xs">
+        <p>© 2025 保留所有权利</p>
+    </div>
+
+    <script>
+        // 模拟加载进度
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.getElementById('progress-bar');
+            const statusText = document.getElementById('status-text');
+            let progress = 75;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 5;
+                
+                // 更新状态文本
+                if (progress < 50) {
+                    statusText.textContent = "正在加载核心组件...";
+                } else if (progress < 80) {
+                    statusText.textContent = "正在初始化界面...";
+                } else {
+                    statusText.textContent = "准备就绪...";
+                }
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // 加载完成后淡出加载界面并跳转到主页
+                    fadeOutLoader();
+                }
+                progressBar.style.width = `${progress}%`;
+            }, 300);
+        });
+
+        // 淡出加载界面并跳转到主页
+        function fadeOutLoader() {
+            const loader = document.querySelector('body');
+            loader.style.transition = 'opacity 0.8s ease-out';
+            loader.style.opacity = '0';
+            
+            setTimeout(() => {
+                // 跳转到主页
+                window.location.href = 'home.html';
+            }, 800);
+        }
+
+        // 进度条动画
+        function progressAnimation() {
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.transition = 'width 0.5s ease-in-out';
+        }
+    </script>
+</body>
+</html>
+    
